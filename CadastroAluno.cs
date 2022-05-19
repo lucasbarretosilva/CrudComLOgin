@@ -43,12 +43,18 @@ namespace WFLogin
           
        
            
-          
+          if(txtNome.Text == string.Empty)
+            {
+                MessageBox.Show("Digite o nome do aluno!","Erro de Cadastro");
+            }
+
+          if(txtRg.Text == string.Empty)
+            {
+                MessageBox.Show("Digite o Rg!","Erro de Cadastro");
+            }
 
 
-
-
-            if (rdbJava.Checked) {
+            if (rdbJava.Checked && txtNome.Text != string.Empty && txtRg.Text != string.Empty) {
 
                 cmd.Parameters.AddWithValue("@NomeAluno", txtNome.Text);
                 cmd.Parameters.AddWithValue("@Rg", txtRg.Text);
@@ -65,7 +71,7 @@ namespace WFLogin
 
 
             }
-            if (rdbNet.Checked)
+            if (rdbNet.Checked && txtNome.Text != string.Empty && txtRg.Text != string.Empty)
             {
 
                 cmd.Parameters.AddWithValue("@NomeAluno", txtNome.Text);
@@ -158,6 +164,8 @@ namespace WFLogin
             SqlConnection con = new SqlConnection(@"Data Source=LUCAS\SQLEXPRESS;Initial Catalog=ServerCast;Integrated Security=True");
             con.Open();
             SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            
 
 
 
@@ -168,11 +176,23 @@ namespace WFLogin
 
 
             cmd.CommandText = "delete from aluno where Rg = @Rg";
-            cmd.Connection = con;
-            cmd.ExecuteNonQuery();
-            MessageBox.Show("Deletado com sucesso!");
+            
+            
+            
+            var a = cmd.ExecuteNonQuery();
+
+            if(a > 0) {
+                MessageBox.Show("Deletado com sucesso! ");
+
+            }
+            else
+            {
+                MessageBox.Show("Digite um Rg cadastrado para deletar o aluno!", "Digitar RG");
+            }
+           
             txtNome.Clear();
             txtRg.Clear();
+            con.Close();
         }
     }
 }
