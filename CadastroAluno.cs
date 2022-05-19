@@ -23,7 +23,7 @@ namespace WFLogin
             SqlConnection con = new SqlConnection(@"Data Source=LUCAS\SQLEXPRESS;Initial Catalog=ServerCast;Integrated Security=True");
             con.Open();
             SqlCommand cmd = new SqlCommand("Select * from aluno",con);
-            //cmd.Connection = con;
+         
             cmd.ExecuteNonQuery();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
